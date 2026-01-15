@@ -394,8 +394,40 @@ class FilterColorCodeActionProvider implements vscode.CodeActionProvider {
     }
 }
 
-// Document Link Provider for BaseType links to poe2db.tw
+// Document Link Provider for BaseType links to poe2db.tw or poedb.tw
 class FilterDocumentLinkProvider implements vscode.DocumentLinkProvider {
+    private baseTypesData: { POE1: string[], POE2: string[] } = { POE1: [], POE2: [] };
+
+    constructor() {
+        this.loadBaseTypes();
+    }
+
+    private loadBaseTypes(): void {
+        try {
+            const dataPath = path.join(__dirname, '..', 'data', 'basetypes.json');
+            const rawData = fs.readFileSync(dataPath, 'utf-8');
+            this.baseTypesData = JSON.parse(rawData);
+        } catch (error) {
+            console.error('Error loading basetypes.json for link provider:', error);
+        }
+    }
+
+    private getBaseUrl(itemName: string): string {
+        const config = vscode.workspace.getConfiguration('poefilter');
+        const gameVersion = config.get<string>('gameVersion', 'Both');
+
+        // Check which database contains this item
+        const isPOE1 = this.baseTypesData.POE1.includes(itemName);
+        const isPOE2 = this.baseTypesData.POE2.includes(itemName);
+
+        // Determine which URL to use based on game version setting and item presence
+        if (gameVersion === 'POE1' || (gameVersion === 'Both' && isPOE1 && !isPOE2)) {
+            return 'https://poedb.tw/us/';
+        } else {
+            return 'https://poe2db.tw/us/';
+        }
+    }
+
     provideDocumentLinks(document: vscode.TextDocument): vscode.DocumentLink[] {
         const links: vscode.DocumentLink[] = [];
         
@@ -424,12 +456,16 @@ class FilterDocumentLinkProvider implements vscode.DocumentLinkProvider {
                     const endPos = startPos.translate(0, itemName.length);
                     const linkRange = new vscode.Range(startPos, endPos);
                     
-                    // Convert item name to poe2db.tw URL format (spaces to underscores)
-                    const urlName = itemName.replace(/\s+/g, '_');
-                    const url = vscode.Uri.parse(`https://poe2db.tw/us/${urlName}`);
+                    // Get the appropriate base URL for this item
+                    const baseUrl = this.getBaseUrl(itemName);
                     
+                    // Convert item name to URL format (spaces to underscores)
+                    const urlName = itemName.replace(/\s+/g, '_');
+                    const url = vscode.Uri.parse(`${baseUrl}${urlName}`);
+                    
+                    const dbName = baseUrl.includes('poe2db') ? 'poe2db.tw' : 'poedb.tw';
                     const link = new vscode.DocumentLink(linkRange, url);
-                    link.tooltip = `Open ${itemName} on poe2db.tw`;
+                    link.tooltip = `Open ${itemName} on ${dbName}`;
                     links.push(link);
                 }
             }
