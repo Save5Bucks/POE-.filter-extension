@@ -1,6 +1,22 @@
 # POE Filter Editor
 
-A Visual Studio Code extension for editing Path of Exile 2 item filters with intelligent features.
+A Visual Studio Code extension for editing Path of Exile (POE1 & POE2) item filters with intelligent features.
+
+## Compatibility
+
+✅ **Works with both Path of Exile 1 and Path of Exile 2**
+
+The filter syntax is identical across both games. This extension supports all standard filter keywords, conditions, and display properties used in both POE1 and POE2 filters.
+
+### BaseType Database
+
+The extension includes **292 BaseTypes** organized by game version:
+- **POE1**: 214 unique items
+- **POE2**: 78 unique items
+
+**Default behavior**: Both POE1 and POE2 BaseTypes are loaded for autocomplete.
+
+**Customization**: You can choose to load only POE1, only POE2, or both via extension settings. See [Extension Settings](#extension-settings) below.
 
 ## Features
 
@@ -64,19 +80,62 @@ A Visual Studio Code extension for editing Path of Exile 2 item filters with int
 ## Requirements
 
 - Visual Studio Code 1.108.0 or higher
-- Path of Exile 2 filter files (`.filter` extension)
+- Path of Exile filter files (`.filter` extension)
+- **Compatible with POE1 and POE2 filters**
 
 ## Known Limitations
 
 - FilterBlade.xyz metadata (`$type->`, `$tier->`, `!tag`, `%XN`) is recognized but not validated
 - BaseType autocompletion requires reference filters in the workspace
 - poe2db.tw links may not work for all item names (URL format may vary)
+- **Note**: While the filter syntax is identical, some item BaseTypes are game-specific (POE1 vs POE2)
 
 ## Extension Settings
 
-This extension works out of the box with no configuration required.
+This extension provides the following settings:
+
+- **`poefilter.gameVersion`**: Choose which game's BaseTypes to include in autocomplete.
+  - Type: String (enum)
+  - Options: `"POE1"`, `"POE2"`, `"Both"`
+  - Default: `"Both"`
+  - Description: Controls which BaseType database to load (POE1: 214 items, POE2: 78 items, Both: 292 items)
+
+- **`poefilter.customBaseTypes`**: Add custom BaseType items to autocomplete suggestions. These will be merged with the built-in BaseType list.
+  - Type: Array of strings
+  - Default: `[]`
+  - Example: `["Custom Item Name", "Another Item"]`
+
+- **`poefilter.excludedBaseTypes`**: Remove specific BaseType items from autocomplete suggestions.
+  - Type: Array of strings
+  - Default: `[]`
+  - Example: `["Unwanted Item", "Another Item"]`
+
+### How to Configure
+
+1. Open Settings (`Ctrl+,` or `Cmd+,`)
+2. Search for "POE Filter"
+3. Choose your game version (POE1, POE2, or Both)
+4. Add or remove BaseTypes as needed
+
+The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 total). By default, both are loaded for maximum compatibility.
 
 ## Release Notes
+
+### 0.2.0 (Latest)
+
+**New BaseType Management System:**
+- 🎮 **Separated POE1 & POE2 Databases**: 214 POE1 items + 78 POE2 items = 292 total
+- ⚙️ **Game Version Setting**: Choose POE1, POE2, or Both (Settings → "Poefilter: Game Version")
+- 📝 **Custom BaseTypes**: Add your own items (Settings → "Poefilter: Custom Base Types")
+- 🚫 **Exclude BaseTypes**: Remove unwanted items (Settings → "Poefilter: Excluded Base Types")
+- 🔄 **Live Configuration**: All settings update instantly without reloading
+
+**How to Configure:**
+1. Press `Ctrl+,` (or `Cmd+,` on Mac) to open Settings
+2. Search for "POE Filter"
+3. Set "Game Version" to POE1, POE2, or Both
+4. Add custom items to "Custom Base Types" array
+5. Add unwanted items to "Excluded Base Types" array
 
 ### 0.1.0 (Initial Release)
 

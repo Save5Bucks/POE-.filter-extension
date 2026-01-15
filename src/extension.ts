@@ -113,34 +113,71 @@ class FilterColorProvider implements vscode.DocumentColorProvider {
 // Completion Provider - Autocompletion
 class FilterCompletionProvider implements vscode.CompletionItemProvider {
     private baseTypes: string[] = [];
+    private context: vscode.ExtensionContext;
 
     constructor(context: vscode.ExtensionContext) {
+        this.context = context;
         this.loadBaseTypes();
+        
+        // Reload BaseTypes when configuration changes
+        vscode.workspace.onDidChangeConfiguration(e => {
+            if (e.affectsConfiguration('poefilter.gameVersion') ||
+                e.affectsConfiguration('poefilter.customBaseTypes') || 
+                e.affectsConfiguration('poefilter.excludedBaseTypes')) {
+                this.loadBaseTypes();
+            }
+        });
     }
 
     private loadBaseTypes() {
-        // Extract BaseTypes from filter files
-        const workspaceFolders = vscode.workspace.workspaceFolders;
-        if (!workspaceFolders) return;
-
-        const filterDir = path.join(workspaceFolders[0].uri.fsPath, 'POE 2 FILTERS');
-        if (!fs.existsSync(filterDir)) return;
-
+        // Load built-in BaseTypes from data file
         const baseTypeSet = new Set<string>();
-        const files = fs.readdirSync(filterDir).filter(f => f.endsWith('.filter'));
-
-        for (const file of files) {
-            const content = fs.readFileSync(path.join(filterDir, file), 'utf-8');
-            const regex = /BaseType\s+==\s+"([^"]+)"/g;
-            let match;
-
-            while ((match = regex.exec(content)) !== null) {
-                match[1].split('" "').forEach(item => baseTypeSet.add(item.trim()));
+        
+        try {
+            const dataPath = path.join(this.context.extensionPath, 'data', 'basetypes.json');
+            if (fs.existsSync(dataPath)) {
+                const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+                const config = vscode.workspace.getConfiguration('poefilter');
+                const gameVersion: string = config.get('gameVersion', 'Both');
+                
+                // Load based on game version setting
+                if (gameVersion === 'POE1' || gameVersion === 'Both') {
+                    if (data.POE1) {
+                        data.POE1.forEach((type: string) => baseTypeSet.add(type));
+                        console.log(`Loaded ${data.POE1.length} POE1 base types`);
+                    }
+                }
+                
+                if (gameVersion === 'POE2' || gameVersion === 'Both') {
+                    if (data.POE2) {
+                        data.POE2.forEach((type: string) => baseTypeSet.add(type));
+                        console.log(`Loaded ${data.POE2.length} POE2 base types`);
+                    }
+                }
             }
+        } catch (error) {
+            console.error('Error loading built-in base types:', error);
+        }
+
+        // Add custom BaseTypes from user settings
+        const config = vscode.workspace.getConfiguration('poefilter');
+        const customTypes: string[] = config.get('customBaseTypes', []);
+        customTypes.forEach(type => baseTypeSet.add(type));
+        
+        if (customTypes.length > 0) {
+            console.log(`Added ${customTypes.length} custom base types from settings`);
+        }
+
+        // Remove excluded BaseTypes from user settings
+        const excludedTypes: string[] = config.get('excludedBaseTypes', []);
+        excludedTypes.forEach(type => baseTypeSet.delete(type));
+        
+        if (excludedTypes.length > 0) {
+            console.log(`Excluded ${excludedTypes.length} base types from settings`);
         }
 
         this.baseTypes = Array.from(baseTypeSet).sort();
-        console.log(`Loaded ${this.baseTypes.length} base types from filter files`);
+        console.log(`Total available base types: ${this.baseTypes.length}`);
     }
 
     provideCompletionItems(document: vscode.TextDocument, position: vscode.Position): vscode.CompletionItem[] {

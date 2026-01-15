@@ -1,8 +1,8 @@
 {
   "name": "poe-filter-editor",
   "displayName": "POE Filter Editor",
-  "description": "Syntax highlighting, validation, and autocompletion for Path of Exile 2 item filters",
-  "version": "0.1.0",
+  "description": "Advanced syntax highlighting, validation, and autocompletion for Path of Exile 1 & 2 item filters with configurable BaseType databases",
+  "version": "0.2.0",
   "publisher": "save5bucks",
   "icon": "filter.png",
   "repository": {
@@ -14,7 +14,7 @@
     "url": "https://github.com/Save5Bucks/poe-filter-editor/issues"
   },
   "engines": {
-    "vscode": "^1.108.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages",
@@ -46,7 +46,34 @@
         "uiTheme": "vs-dark",
         "path": "./themes/poefilter-theme.json"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "POE Filter Editor",
+      "properties": {
+        "poefilter.gameVersion": {
+          "type": "string",
+          "enum": ["POE1", "POE2", "Both"],
+          "default": "Both",
+          "description": "Which game's BaseTypes to include in autocomplete: POE1, POE2, or Both."
+        },
+        "poefilter.customBaseTypes": {
+          "type": "array",
+          "default": [],
+          "description": "Custom BaseType items to add to autocomplete suggestions. These will be merged with the built-in BaseType list.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "poefilter.excludedBaseTypes": {
+          "type": "array",
+          "default": [],
+          "description": "BaseType items to exclude from autocomplete suggestions.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

@@ -8,5 +8,6 @@ node_modules/**
 **/*.map
 **/*.ts
 !out/**/*.js
+POE 1 FILTERS/**
 POE 2 FILTERS/**
 idea.txt
