@@ -1,0 +1,81 @@
+{
+  "name": "poe-filter-editor",
+  "displayName": "POE Filter Editor",
+  "description": "Syntax highlighting, validation, and autocompletion for Path of Exile 2 item filters",
+  "version": "0.1.0",
+  "publisher": "save5bucks",
+  "icon": "filter.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Save5Bucks/poe-filter-editor"
+  },
+  "homepage": "https://www.flinnbuilt.com",
+  "bugs": {
+    "url": "https://github.com/Save5Bucks/poe-filter-editor/issues"
+  },
+  "engines": {
+    "vscode": "^1.108.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:poefilter"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "poefilter",
+        "aliases": ["POE Filter", "poefilter"],
+        "extensions": [".filter"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "poefilter",
+        "scopeName": "source.poefilter",
+        "path": "./syntaxes/poefilter.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "POE Filter Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/poefilter-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile"
+  },
+  "keywords": [
+    "path of exile",
+    "poe",
+    "poe2",
+    "filter",
+    "loot filter",
+    "syntax highlighting",
+    "item filter"
+  ],
+  "author": "save5bucks",
+  "license": "MIT",
+  "credits": [
+    "poe2db.tw - https://poe2db.tw/",
+    "Path of Exile - https://www.pathofexile.com/",
+    "FilterBlade - https://www.filterblade.xyz/"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.0.8",
+    "@types/vscode": "^1.108.1",
+    "typescript": "^5.9.3",
+    "vscode-languageclient": "^9.0.1",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  }
+}

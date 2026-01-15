@@ -1,0 +1,103 @@
+# Example POE2 Filter - Test File
+# This demonstrates the extension's features
+# Regular comments like this are green (both # and text)
+# The # symbol and all text after it should be green
+
+# IMPORTANT NOTE ABOUT METADATA:
+# When you see "Show # %D6 $type->gold $tier->t1 !tag"
+# Everything after the # is FilterBlade.xyz metadata for organization
+# The POE2 game engine IGNORES everything after # on Show/Hide lines
+# These tags ($type->, $tier->, !tag, %XN) are ONLY for FilterBlade.xyz
+# You can use them if you edit on FilterBlade, or omit them entirely!
+
+# [[0100]] Gold
+Show # %D6 $type->gold $tier->stack3 !gold_pilehuge
+	StackSize >= 5000
+	BaseType == "Gold"
+	SetFontSize 40
+	SetTextColor 255 255 255 255
+	SetBorderColor 255 255 0 255
+	SetBackgroundColor 20 20 0 255
+	PlayEffect Orange
+	MinimapIcon 1 Yellow Cross
+
+# [[0200]] Exotic Bases
+Show # %D6 $type->exoticbases $tier->commonexoticbaseshigh !gear_jewelmagic
+	ItemLevel >= 82
+	Rarity Normal Magic
+	BaseType == "Breach Ring"
+	SetTextColor 0 70 255 255
+	SetBorderColor 0 70 255 255
+	SetBackgroundColor 30 0 70 255
+	PlayAlertSound 2 300
+	PlayEffect Blue
+	MinimapIcon 1 Blue Diamond
+
+# [[0300]] Currency
+Show # %D6 $type->currency $tier->t1 !currency_divine
+	Class == "Currency"
+	BaseType == "Divine Orb" "Exalted Orb"
+	SetFontSize 45
+	SetTextColor 255 0 0 255
+	SetBorderColor 255 0 0 255
+	PlayAlertSound 1 300
+	PlayEffect Red Temp
+	MinimapIcon 0 Red Star
+
+# Test all PlayEffect colors (hover for definitions!)
+Show # Testing Red effect
+	BaseType == "Test1"
+	PlayEffect Red
+
+Show # Testing Green effect  
+	BaseType == "Test2"
+	PlayEffect Green Temp
+
+Show # Testing Blue effect
+	BaseType == "Test3"
+	PlayEffect Blue
+
+Show # Testing Yellow effect
+	BaseType == "Test4"
+	PlayEffect Yellow Temp
+
+Show # Testing Orange effect
+	BaseType == "Test5"
+	PlayEffect Orange
+
+Show # Testing Purple effect
+	BaseType == "Test6"
+	PlayEffect Purple
+
+Show # Testing Cyan effect
+	BaseType == "Test7"
+	PlayEffect Cyan
+
+Show # Testing Pink effect
+	BaseType == "Test8"
+	MinimapIcon 2 Pink Diamond
+
+# [[0400]] Rare Items
+Show # %D4 $type->rare $tier->gear4a !gear_tiered
+	ItemLevel >= 82
+	Rarity Rare
+	Class == "Boots" "Gloves" "Helmets"
+	SetTextColor 255 255 119 255
+	SetBorderColor 255 255 119 255
+
+Show # Magic items for leveling
+	ItemLevel >= 40
+	Rarity Magic
+	Class == "Amulets" "Rings"
+	SetTextColor 136 136 255 255
+
+Show # Normal crafting bases
+	ItemLevel >= 75
+	Rarity Normal
+	Class == "Helmets"
+	SetTextColor 200 200 200 255
+
+Hide # %H3 $type->normal $tier->low !hide_lowlevel
+	ItemLevel < 60
+	Rarity Normal
+	SetTextColor 150 150 150 100

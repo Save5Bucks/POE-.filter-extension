@@ -1,0 +1,234 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "POE Filter",
+  "scopeName": "source.poefilter",
+  "patterns": [
+    {
+      "include": "#show-hide-with-metadata"
+    },
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#show-hide"
+    },
+    {
+      "include": "#conditions"
+    },
+    {
+      "include": "#display-properties"
+    },
+    {
+      "include": "#audio-visual"
+    }
+  ],
+  "repository": {
+    "show-hide-with-metadata": {
+      "patterns": [
+        {
+          "match": "^\\s*(Show|Hide)\\s+(#)\\s*(.*)$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.poefilter"
+            },
+            "2": {
+              "name": "punctuation.definition.metadata.poefilter"
+            },
+            "3": {
+              "name": "meta.filter.metadata.poefilter",
+              "patterns": [
+                {
+                  "match": "(%[A-Z][0-9]+)",
+                  "name": "constant.numeric.priority.poefilter"
+                },
+                {
+                  "match": "(\\$type->|\\$tier->)([^\\s]+)",
+                  "captures": {
+                    "1": {
+                      "name": "keyword.other.metadata.poefilter"
+                    },
+                    "2": {
+                      "name": "entity.name.type.metadata.poefilter"
+                    }
+                  }
+                },
+                {
+                  "match": "(!\\w+)",
+                  "name": "entity.name.tag.poefilter"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "match": "^\\s*(#)(.*)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.comment.poefilter"
+            },
+            "2": {
+              "name": "comment.line.number-sign.poefilter"
+            }
+          }
+        }
+      ]
+    },
+    "show-hide": {
+      "patterns": [
+        {
+          "name": "keyword.control.poefilter",
+          "match": "^\\s*(Show|Hide)\\b"
+        }
+      ]
+    },
+    "conditions": {
+      "patterns": [
+        {
+          "name": "keyword.other.condition.poefilter",
+          "match": "\\b(BaseType|Class|Rarity|ItemLevel|DropLevel|Quality|Sockets|LinkedSockets|SocketGroup|Height|Width|HasExplicitMod|AnyEnchantment|HasEnchantment|StackSize|GemLevel|GemQualityType|AlternateQuality|Identified|Corrupted|Mirrored|ElderItem|ShaperItem|FracturedItem|SynthesisedItem|ShapedMap|ElderMap|BlightedMap|MapTier|AreaLevel|Transfigured|HasInfluence|BaseArmour|BaseEvasion|BaseEnergyShield|BaseWard|BaseDefencePercentile|CorruptedMods|EnchantmentPassiveNode|EnchantmentPassiveNum|Foulborn|HasCruciblePassiveTree|HasEaterOfWorldsImplicit|HasImplicitMod|HasSearingExarchImplicit|HasVaalUniqueMod|IsVaalUnique|MemoryStrands|Replica|Scourged|TwiceCorrupted|UberBlightedMap|UnidentifiedItemTier|WaystoneTier|ZanaMemory|ArchnemesisMod|Continue|Import)\\b"
+        },
+        {
+          "name": "keyword.operator.poefilter",
+          "match": "(==|!=|<=|>=|<|>|=|!)"
+        },
+        {
+          "match": "\\b(Rarity)\\s+(>=?|<=?|==?|!=?)\\s+(Normal|Magic|Rare|Unique)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.other.condition.poefilter"
+            },
+            "2": {
+              "name": "keyword.operator.poefilter"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "match": "\\bNormal\\b",
+                  "name": "constant.language.rarity.normal.poefilter"
+                },
+                {
+                  "match": "\\bMagic\\b",
+                  "name": "constant.language.rarity.magic.poefilter"
+                },
+                {
+                  "match": "\\bRare\\b",
+                  "name": "constant.language.rarity.rare.poefilter"
+                },
+                {
+                  "match": "\\bUnique\\b",
+                  "name": "constant.language.rarity.unique.poefilter"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "match": "\\b(Normal)\\b",
+          "name": "constant.language.rarity.normal.poefilter"
+        },
+        {
+          "match": "\\b(Magic)\\b",
+          "name": "constant.language.rarity.magic.poefilter"
+        },
+        {
+          "match": "\\b(Rare)\\b",
+          "name": "constant.language.rarity.rare.poefilter"
+        },
+        {
+          "match": "\\b(Unique)\\b",
+          "name": "constant.language.rarity.unique.poefilter"
+        },
+        {
+          "name": "constant.language.boolean.poefilter",
+          "match": "\\b(True|False)\\b"
+        },
+        {
+          "name": "string.quoted.double.poefilter",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.poefilter",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "display-properties": {
+      "patterns": [
+        {
+          "match": "^\\s*(SetFontSize|SetTextColor|SetBorderColor|SetBackgroundColor)\\s+(.+)$",
+          "captures": {
+            "1": {
+              "name": "support.function.display.poefilter"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "name": "constant.numeric.poefilter",
+                  "match": "\\b[0-9]+\\b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "support.function.display.poefilter",
+          "match": "\\b(SetFontSize|SetTextColor|SetBorderColor|SetBackgroundColor)\\b"
+        }
+      ]
+    },
+    "audio-visual": {
+      "patterns": [
+        {
+          "match": "^\\s*(PlayEffect)\\s+(Red|Green|Blue|Brown|White|Yellow|Cyan|Grey|Orange|Pink|Purple)(\\s+Temp)?",
+          "captures": {
+            "1": {
+              "name": "support.function.effect.poefilter"
+            },
+            "2": {
+              "name": "constant.language.effect-color.poefilter"
+            },
+            "3": {
+              "name": "constant.language.effect.poefilter"
+            }
+          }
+        },
+        {
+          "match": "^\\s*(MinimapIcon)\\s+([0-2])\\s+(Red|Green|Blue|Brown|White|Yellow|Cyan|Grey|Orange|Pink|Purple)\\s+(Circle|Diamond|Hexagon|Square|Star|Triangle|Cross|Moon|Raindrop|Kite|Pentagon|UpsideDownHouse)",
+          "captures": {
+            "1": {
+              "name": "support.function.effect.poefilter"
+            },
+            "2": {
+              "name": "constant.numeric.poefilter"
+            },
+            "3": {
+              "name": "constant.language.effect-color.poefilter"
+            },
+            "4": {
+              "name": "constant.language.effect.poefilter"
+            }
+          }
+        },
+        {
+          "name": "support.function.effect.poefilter",
+          "match": "\\b(PlayAlertSound|PlayEffect|MinimapIcon|PlayAlertSoundPositional|CustomAlertSound|CustomAlertSoundOptional|DisableDropSound|EnableDropSound)\\b"
+        },
+        {
+          "name": "constant.language.effect.poefilter",
+          "match": "\\b(Temp|Circle|Diamond|Hexagon|Square|Star|Triangle|Cross|Moon|Raindrop|Kite|Pentagon|UpsideDownHouse)\\b"
+        },
+        {
+          "name": "constant.language.effect-color.poefilter",
+          "match": "\\b(Red|Green|Blue|Brown|White|Yellow|Cyan|Grey|Orange|Pink|Purple)\\b"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "name": "POE Filter Theme",
+  "type": "dark",
+  "colors": {},
+  "tokenColors": [
+    {
+      "scope": "punctuation.definition.comment.poefilter",
+      "settings": {
+        "foreground": "#6A9955"
+      }
+    },
+    {
+      "scope": "comment.line.number-sign.poefilter",
+      "settings": {
+        "foreground": "#6A9955"
+      }
+    },
+    {
+      "scope": "punctuation.definition.metadata.poefilter",
+      "settings": {
+        "foreground": "#6A9955"
+      }
+    },
+    {
+      "scope": "keyword.other.condition.poefilter",
+      "settings": {
+        "foreground": "#9CDCFE",
+        "fontStyle": ""
+      }
+    },
+    {
+      "scope": "support.function.display.poefilter",
+      "settings": {
+        "foreground": "#9CDCFE",
+        "fontStyle": ""
+      }
+    },
+    {
+      "scope": "support.function.effect.poefilter",
+      "settings": {
+        "foreground": "#9CDCFE",
+        "fontStyle": ""
+      }
+    },
+    {
+      "scope": "constant.numeric.poefilter",
+      "settings": {
+        "foreground": "#B5CEA8"
+      }
+    },
+    {
+      "scope": "constant.language.effect-color.poefilter",
+      "settings": {
+        "foreground": "#CE9178",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "constant.language.rarity.normal.poefilter",
+      "settings": {
+        "foreground": "#FFFFFF",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "constant.language.rarity.magic.poefilter",
+      "settings": {
+        "foreground": "#8888FF",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "constant.language.rarity.rare.poefilter",
+      "settings": {
+        "foreground": "#FFFF77",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "constant.language.rarity.unique.poefilter",
+      "settings": {
+        "foreground": "#AF6025",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": "meta.filter.metadata.poefilter",
+      "settings": {
+        "foreground": "#D4D4D4"
+      }
+    },
+    {
+      "scope": "constant.numeric.priority.poefilter",
+      "settings": {
+        "foreground": "#B5CEA8"
+      }
+    },
+    {
+      "scope": "keyword.other.metadata.poefilter",
+      "settings": {
+        "foreground": "#C586C0"
+      }
+    },
+    {
+      "scope": "entity.name.type.metadata.poefilter",
+      "settings": {
+        "foreground": "#4EC9B0"
+      }
+    },
+    {
+      "scope": "entity.name.tag.poefilter",
+      "settings": {
+        "foreground": "#9CDCFE"
+      }
+    }
+  ]
+}
