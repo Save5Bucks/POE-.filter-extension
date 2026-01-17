@@ -90,6 +90,17 @@ The extension includes **292 BaseTypes** organized by game version:
 - poe2db.tw links may not work for all item names (URL format may vary)
 - **Note**: While the filter syntax is identical, some item BaseTypes are game-specific (POE1 vs POE2)
 
+## ⚠️ Important: Color Decorator Limit
+
+Large POE filter files (like Uber Strict) can have **800+ color declarations**. VS Code has a default limit of **500 color decorators** per file for performance.
+
+**To see all colors:**
+1. Open Settings (`Ctrl+,` or `Cmd+,`)
+2. Search for `editor.colorDecoratorsLimit`
+3. Increase the value to `1000` or higher
+
+**The extension will prompt you** to increase this limit on first use. This only needs to be done once.
+
 ## Extension Settings
 
 This extension provides the following settings:
@@ -121,7 +132,18 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Release Notes
 
-### 0.1.5 (Latest)
+### 0.1.6 (Latest)
+
+**Major Fix - Color Decorators:**
+- 🎨 **Automatic Color Limit Increase**: Extension now detects VS Code's 500 color decorator limit and prompts users to increase it to 1000 for large filter files
+- 📊 **One-Click Fix**: Single button click automatically updates `editor.colorDecoratorsLimit` setting
+- 📖 **Documentation**: Added prominent warning and instructions about color decorator limits in README
+- ✅ **Full Color Support**: All 800+ colors in Uber Strict filters now display properly after setting adjustment
+
+**Why This Matters:**
+Large POE filter files have 800+ color declarations. VS Code's default 500 limit caused colors to stop appearing halfway through files. This update solves it automatically.
+
+### 0.1.5
 
 **Bug Fixes:**
 - 🎨 **Fixed Color Picker**: Color picker and color swatches now work in released/installed version (added `colors` contribution to package.json)

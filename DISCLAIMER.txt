@@ -146,7 +146,7 @@ IF YOU DO NOT AGREE TO THESE TERMS, DO NOT INSTALL OR USE THIS EXTENSION.
                             VERSION INFORMATION
 ================================================================================
 
-Extension Version: 0.1.5
+Extension Version: 0.1.6
 Last Updated: January 2026
 License: See LICENSE file for full license text
 

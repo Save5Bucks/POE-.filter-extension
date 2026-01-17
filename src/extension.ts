@@ -5,6 +5,9 @@ import * as fs from 'fs';
 export function activate(context: vscode.ExtensionContext) {
     console.log('POE Filter Editor extension activated');
 
+    // Check and suggest color decorator limit increase for large filter files
+    checkColorDecoratorLimit(context);
+
     // Register color provider for inline color visualization
     const colorProvider = new FilterColorProvider();
     context.subscriptions.push(
@@ -236,31 +239,35 @@ export function deactivate() {}
 
 // Color Provider - Shows color swatches inline
 class FilterColorProvider implements vscode.DocumentColorProvider {
-    provideDocumentColors(document: vscode.TextDocument): vscode.ColorInformation[] {
+    provideDocumentColors(document: vscode.TextDocument, token?: vscode.CancellationToken): vscode.ColorInformation[] {
         const colors: vscode.ColorInformation[] = [];
         const colorRegex = /\b(SetTextColor|SetBorderColor|SetBackgroundColor)\s+(\d+)\s+(\d+)\s+(\d+)(?:\s+(\d+))?/g;
+        
+        // Get all text at once instead of line by line for better performance
+        const text = document.getText();
+        let match;
+        let count = 0;
 
-        for (let i = 0; i < document.lineCount; i++) {
-            const line = document.lineAt(i);
-            let match;
-
-            while ((match = colorRegex.exec(line.text)) !== null) {
-                const r = parseInt(match[2]) / 255;
-                const g = parseInt(match[3]) / 255;
-                const b = parseInt(match[4]) / 255;
-                const a = match[5] ? parseInt(match[5]) / 255 : 1;
-
-                const range = new vscode.Range(
-                    i,
-                    match.index + match[1].length + 1,
-                    i,
-                    match.index + match[0].length
-                );
-
-                colors.push(new vscode.ColorInformation(range, new vscode.Color(r, g, b, a)));
+        while ((match = colorRegex.exec(text)) !== null) {
+            // Check cancellation token periodically for better performance
+            if (token?.isCancellationRequested) {
+                break;
             }
+
+            const r = parseInt(match[2]) / 255;
+            const g = parseInt(match[3]) / 255;
+            const b = parseInt(match[4]) / 255;
+            const a = match[5] ? parseInt(match[5]) / 255 : 1;
+
+            const startPos = document.positionAt(match.index + match[1].length + 1);
+            const endPos = document.positionAt(match.index + match[0].length);
+            const range = new vscode.Range(startPos, endPos);
+
+            colors.push(new vscode.ColorInformation(range, new vscode.Color(r, g, b, a)));
+            count++;
         }
 
+        console.log(`POE Filter: Found ${count} colors in document with ${document.lineCount} lines, returning ${colors.length} color infos`);
         return colors;
     }
 
@@ -1945,5 +1952,36 @@ class FilterLink extends vscode.TreeItem {
         };
         
         this.iconPath = new vscode.ThemeIcon('link');
+    }
+}
+
+// Check color decorator limit and suggest increase for large filter files
+function checkColorDecoratorLimit(context: vscode.ExtensionContext) {
+    const config = vscode.workspace.getConfiguration();
+    const currentLimit = config.get<number>('editor.colorDecoratorsLimit', 500);
+    const recommendedLimit = 1000;
+    
+    // Only show notification once per install
+    const hasShownNotification = context.globalState.get('hasShownColorLimitNotification', false);
+    
+    if (!hasShownNotification && currentLimit < recommendedLimit) {
+        vscode.window.showInformationMessage(
+            `POE Filter files can have 800+ colors. Current limit: ${currentLimit}. Increase to ${recommendedLimit}+ for best experience?`,
+            'Increase Limit',
+            'Remind Me Later',
+            'Don\'t Show Again'
+        ).then(selection => {
+            if (selection === 'Increase Limit') {
+                config.update('editor.colorDecoratorsLimit', recommendedLimit, vscode.ConfigurationTarget.Global);
+                vscode.window.showInformationMessage(`Color decorator limit increased to ${recommendedLimit}. Reload window for changes to take effect.`, 'Reload').then(choice => {
+                    if (choice === 'Reload') {
+                        vscode.commands.executeCommand('workbench.action.reloadWindow');
+                    }
+                });
+                context.globalState.update('hasShownColorLimitNotification', true);
+            } else if (selection === 'Don\'t Show Again') {
+                context.globalState.update('hasShownColorLimitNotification', true);
+            }
+        });
     }
 }
