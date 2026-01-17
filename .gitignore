@@ -5,3 +5,6 @@ out
 POE 1 FILTERS/
 POE 2 FILTERS/
 idea.txt
+
+# Exclude entire sounds folder from repo (but will be included in extension package)
+sounds/

@@ -121,7 +121,21 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Release Notes
 
-### 0.2.0 (Latest)
+### 0.1.3 (Latest)
+
+**New Features:**
+- 📋 **Filter Outline Navigation**: Sidebar panel showing all `[[XXXX]]` filter sections for quick navigation
+- 🔊 **Sound Preview System**: Play alert sounds directly in VS Code with clickable ▶️ buttons
+- 🎵 **Sound Selection Tools**: Autocomplete and quick actions for all 26 PlayAlertSound options
+- 🔗 **Helpful Links Panel**: Sidebar with 15 community resources (wikis, tools, databases)
+- ⚙️ **Volume Control**: Adjustable sound preview volume in settings
+- 📖 **Sound Descriptions**: Hover tooltips showing sound names (Alchemy, Divine, Mirror, etc.)
+
+**Includes 26 Alert Sounds:**
+- Sounds 1-6: Standard game alert sounds
+- Sounds 7-26: FilterBlade community sounds (requires FilterBlade audio pack in-game)
+
+### 0.1.2
 
 **New BaseType Management System:**
 - 🎮 **Separated POE1 & POE2 Databases**: 214 POE1 items + 78 POE2 items = 292 total
@@ -156,9 +170,42 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Credits
 
-- **Reference Filters**: NeverSink - https://www.FilterBlade.xyz
-- **POE Filter Documentation**: https://www.pathofexile.com/item-filter/about
-- **Item Database**: https://poe2db.tw
+### Reference & Community Resources
+
+- **NeverSink's Filters**: https://www.filterblade.xyz - Reference filters and community filter editor
+- **POE Official Documentation**: https://www.pathofexile.com/item-filter/about - Filter syntax documentation
+
+### Item Databases & Tools
+
+- **PoE Database (POE1)**: https://poedb.tw - Comprehensive POE1 database
+- **PoE2 Database**: https://poe2db.tw - Comprehensive POE2 database  
+- **Craft of Exile**: https://www.craftofexile.com - Crafting simulator and calculator
+- **PoE & POE2 Economy**: https://poe.ninja - Market prices and economy tracking
+
+### Game Information Resources
+
+- **PoE Wiki**: https://www.poewiki.net/wiki/Path_of_Exile - Official Path of Exile wiki
+- **PoE2 Wiki**: https://www.poewiki.net/wiki/Path_of_Exile_2 - Official Path of Exile 2 wiki
+- **PoE Vault**: https://www.poe-vault.com - Guides and builds database
+- **Maxroll PoE Guides**: https://maxroll.gg/poe - POE1 guides and builds
+- **Maxroll PoE2 Guides**: https://maxroll.gg/poe2 - POE2 guides and builds
+
+### Build Planning & Tools
+
+- **Path of Building Community**: https://pathofbuilding.community - Build planning tool
+- **PoHX Build Planner**: https://pohx.net - POE build resources and guides
+- **Atziri's Temple Planner**: https://sulozor.github.io/#/atziri-temple - Atlas planning tool
+
+### Trading Applications
+
+- **Awakened PoE Trade**: https://snosme.github.io/awakened-poe-trade - POE1 trading overlay
+- **Exiled Exchange 2**: https://kvan7.github.io/Exiled-Exchange-2/download - POE2 trading app
+
+### Legal Notice
+
+**DISCLAIMER**: This extension is an unofficial, community-created tool not affiliated with Grinding Gear Games. See `DISCLAIMER.txt` for full legal terms, liability information, and third-party tool policy details. By using this extension, you acknowledge the risks and agree to the terms outlined in the disclaimer.
+
+**Audio Assets**: Alert sounds sourced from FilterBlade.xyz for filter testing purposes. These are not official game assets. See `DISCLAIMER.txt` for full audio asset disclosure.
 
 ## Contributing
 

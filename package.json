@@ -2,19 +2,19 @@
   "name": "poe-filter-editor",
   "displayName": "POE Filter Editor",
   "description": "Advanced syntax highlighting, validation, and autocompletion for Path of Exile 1 & 2 item filters with configurable BaseType databases",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "publisher": "save5bucks",
   "icon": "filter.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Save5Bucks/poe-filter-editor"
+    "url": "https://github.com/Save5Bucks/POE-.filter-extension"
   },
   "homepage": "https://www.flinnbuilt.com",
   "bugs": {
-    "url": "https://github.com/Save5Bucks/poe-filter-editor/issues"
+    "url": "https://github.com/Save5Bucks/POE-.filter-extension/issues"
   },
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.95.0"
   },
   "categories": [
     "Programming Languages",
@@ -22,14 +22,20 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onLanguage:poefilter"
+    "onLanguage:poefilter",
+    "onView:poefilterOutline"
   ],
   "contributes": {
     "languages": [
       {
         "id": "poefilter",
-        "aliases": ["POE Filter", "poefilter"],
-        "extensions": [".filter"],
+        "aliases": [
+          "POE Filter",
+          "poefilter"
+        ],
+        "extensions": [
+          ".filter"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -52,7 +58,11 @@
       "properties": {
         "poefilter.gameVersion": {
           "type": "string",
-          "enum": ["POE1", "POE2", "Both"],
+          "enum": [
+            "POE1",
+            "POE2",
+            "Both"
+          ],
           "default": "Both",
           "description": "Which game's BaseTypes to include in autocomplete: POE1, POE2, or Both."
         },
@@ -71,8 +81,36 @@
           "items": {
             "type": "string"
           }
+        },
+        "poefilter.soundVolume": {
+          "type": "number",
+          "default": 50,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Volume level for alert sound playback (0-100%)."
         }
       }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "poefilter",
+          "title": "POE Filter",
+          "icon": "$(filter)"
+        }
+      ]
+    },
+    "views": {
+      "poefilter": [
+        {
+          "id": "poefilterOutline",
+          "name": "OUTLINE"
+        },
+        {
+          "id": "poefilterLinks",
+          "name": "HELPFUL LINKS"
+        }
+      ]
     }
   },
   "scripts": {
@@ -93,13 +131,15 @@
   "author": "save5bucks",
   "license": "MIT",
   "credits": [
+    "poedb.tw - https://poedb.tw/",
     "poe2db.tw - https://poe2db.tw/",
     "Path of Exile - https://www.pathofexile.com/",
     "FilterBlade - https://www.filterblade.xyz/"
   ],
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@types/node": "^25.0.8",
-    "@types/vscode": "^1.108.1",
+    "@types/vscode": "^1.95.0",
     "typescript": "^5.9.3",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
