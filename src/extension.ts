@@ -1706,12 +1706,22 @@ function updateDiagnostics(document: vscode.TextDocument, collection: vscode.Dia
 
         // Check for unknown keywords (basic validation)
         const knownKeywords = [
-            'Show', 'Hide', 'BaseType', 'Class', 'Rarity', 'ItemLevel', 'DropLevel',
+            'Show', 'Hide', 'Continue', 'Import',
+            'BaseType', 'Class', 'Rarity', 'ItemLevel', 'DropLevel',
             'Quality', 'Sockets', 'LinkedSockets', 'SocketGroup', 'Height', 'Width',
             'HasExplicitMod', 'StackSize', 'Identified', 'Corrupted', 'Mirrored',
             'SetFontSize', 'SetTextColor', 'SetBorderColor', 'SetBackgroundColor',
-            'PlayAlertSound', 'PlayEffect', 'MinimapIcon', 'AreaLevel',
-            'ElderItem', 'ShaperItem', 'FracturedItem', 'SynthesisedItem'
+            'PlayAlertSound', 'PlayAlertSoundPositional', 'PlayEffect', 'MinimapIcon', 'AreaLevel',
+            'ElderItem', 'ShaperItem', 'FracturedItem', 'SynthesisedItem',
+            'GemLevel', 'WaystoneTier', 'UnidentifiedItemTier', 'TwiceCorrupted',
+            'ShapedMap', 'ElderMap', 'BlightedMap', 'UberBlightedMap', 'MapTier',
+            'Transfigured', 'HasInfluence', 'BaseArmour', 'BaseEvasion', 
+            'BaseEnergyShield', 'BaseWard', 'BaseDefencePercentile', 'CorruptedMods',
+            'EnchantmentPassiveNode', 'EnchantmentPassiveNum', 'Foulborn',
+            'HasCruciblePassiveTree', 'HasEaterOfWorldsImplicit', 'HasImplicitMod',
+            'HasSearingExarchImplicit', 'HasVaalUniqueMod', 'IsVaalUnique',
+            'MemoryStrands', 'Replica', 'Scourged', 'ZanaMemory', 'ArchnemesisMod',
+            'AnyEnchantment', 'HasEnchantment', 'GemQualityType', 'AlternateQuality'
         ];
 
         const firstWord = text.split(/\s+/)[0];

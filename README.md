@@ -121,7 +121,13 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Release Notes
 
-### 0.1.3 (Latest)
+### 0.1.4 (Latest)
+
+**Bug Fixes:**
+- 🐛 **Fixed Validation**: Added 30+ missing POE2 keywords to validator including `UnidentifiedItemTier`, `WaystoneTier`, `GemLevel`, `Continue`, `Import`, `PlayAlertSoundPositional`, and many more
+- ✅ **No More False Warnings**: Valid POE2 keywords no longer show "Unknown filter keyword" warnings
+
+### 0.1.3
 
 **New Features:**
 - 📋 **Filter Outline Navigation**: Sidebar panel showing all `[[XXXX]]` filter sections for quick navigation
