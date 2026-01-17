@@ -121,7 +121,13 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Release Notes
 
-### 0.1.4 (Latest)
+### 0.1.5 (Latest)
+
+**Bug Fixes:**
+- 🎨 **Fixed Color Picker**: Color picker and color swatches now work in released/installed version (added `colors` contribution to package.json)
+- ✅ **RGBA Color Support**: Inline color visualization and picker now properly activate for SetTextColor, SetBorderColor, SetBackgroundColor
+
+### 0.1.4
 
 **Bug Fixes:**
 - 🐛 **Fixed Validation**: Added 30+ missing POE2 keywords to validator including `UnidentifiedItemTier`, `WaystoneTier`, `GemLevel`, `Continue`, `Import`, `PlayAlertSoundPositional`, and many more

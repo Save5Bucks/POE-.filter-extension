@@ -2,7 +2,7 @@
   "name": "poe-filter-editor",
   "displayName": "POE Filter Editor",
   "description": "Advanced syntax highlighting, validation, and autocompletion for Path of Exile 1 & 2 item filters with configurable BaseType databases",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "save5bucks",
   "icon": "filter.png",
   "repository": {
@@ -51,6 +51,11 @@
         "label": "POE Filter Theme",
         "uiTheme": "vs-dark",
         "path": "./themes/poefilter-theme.json"
+      }
+    ],
+    "colors": [
+      {
+        "language": "poefilter"
       }
     ],
     "configuration": {
