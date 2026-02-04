@@ -2,6 +2,8 @@
 
 A Visual Studio Code extension for editing Path of Exile (POE1 & POE2) item filters with intelligent features.
 
+![Demo](GIF/Demo.gif)
+
 ## Compatibility
 
 ✅ **Works with both Path of Exile 1 and Path of Exile 2**
