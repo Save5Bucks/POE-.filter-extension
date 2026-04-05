@@ -2,7 +2,7 @@
 
 A Visual Studio Code extension for editing Path of Exile (POE1 & POE2) item filters with intelligent features.
 
-![Demo](GIF/Demo.gif)
+![Demo](https://raw.githubusercontent.com/Save5Bucks/POE-.filter-extension/main/GIF/Demo.gif)
 
 ## Compatibility
 
@@ -37,7 +37,8 @@ The extension includes **292 BaseTypes** organized by game version:
 - **Effect Color Recognition**: Highlights all 12 effect colors (Red, Green, Blue, Brown, White, Yellow, Cyan, Grey, Orange, Pink, Purple, Temp)
 
 ### 🔗 BaseType Links
-- **Clickable Item Names**: Ctrl+Click (Cmd+Click on Mac) any quoted BaseType item to open its page on poe2db.tw
+- **Clickable Item Names**: Ctrl+Click (Cmd+Click on Mac) any quoted BaseType item to open its page on poedb.tw (POE1) or poe2db.tw (POE2)
+- **Auto-Detected POE Version**: Links automatically use the correct database based on the filter file's header or folder name
 - **Smart URL Conversion**: Automatically converts item names to proper URL format
 - **Multiple Items Support**: Each item in a list is individually clickable
 
@@ -74,7 +75,7 @@ The extension includes **292 BaseTypes** organized by game version:
 2. **Open any `.filter` file** - the extension activates automatically
 3. **Start editing** with full syntax highlighting and validation
 4. **Click on colors** to open the color picker
-5. **Ctrl+Click BaseTypes** to view items on poe2db.tw
+5. **Ctrl+Click BaseTypes** to view items on poedb.tw (POE1) or poe2db.tw (POE2)
 6. **Use lightbulb menu** (Ctrl+.) on colors/shapes to quickly change them
 7. **Trigger autocomplete** with `Ctrl+Space` or by typing
 8. **Hover over keywords** for documentation and examples
@@ -89,7 +90,7 @@ The extension includes **292 BaseTypes** organized by game version:
 
 - FilterBlade.xyz metadata (`$type->`, `$tier->`, `!tag`, `%XN`) is recognized but not validated
 - BaseType autocompletion requires reference filters in the workspace
-- poe2db.tw links may not work for all item names (URL format may vary)
+- poedb.tw / poe2db.tw links may not work for all item names (URL format may vary)
 - **Note**: While the filter syntax is identical, some item BaseTypes are game-specific (POE1 vs POE2)
 
 ## ⚠️ Important: Color Decorator Limit
@@ -134,7 +135,19 @@ The extension comes with **214 POE1 BaseTypes** and **78 POE2 BaseTypes** (292 t
 
 ## Release Notes
 
-### 0.1.6 (Latest)
+### 0.1.7 (Latest)
+
+**New Feature - POE Version Auto-Detection for Database Links:**
+- 🔍 **Auto-Detection System**: BaseType links now automatically detect whether a filter file is for POE 1 or POE 2
+- 🔗 **Correct Database Links**: POE 1 filters link to `poedb.tw`, POE 2 filters link to `poe2db.tw`
+- 📄 **Header-Based Detection**: Reads the filter file header (`NeverSink's Indepth Loot Filter - for Path of Exile` vs `Path of Exile 2`)
+- 📁 **Folder-Based Fallback**: Also detects POE version from folder names (e.g., `POE 1 FILTERS` / `POE 2 FILTERS`)
+- ⚙️ **Setting Fallback**: Falls back to the `poefilter.gameVersion` setting if version cannot be auto-detected
+
+**Why This Matters:**
+Previously, POE 1 filter files could incorrectly generate `poe2db.tw` links. Now the correct database is always used based on the filter file itself.
+
+### 0.1.6
 
 **Major Fix - Color Decorators:**
 - 🎨 **Automatic Color Limit Increase**: Extension now detects VS Code's 500 color decorator limit and prompts users to increase it to 1000 for large filter files
@@ -196,7 +209,7 @@ Large POE filter files have 800+ color declarations. VS Code's default 500 limit
 - Syntax validation with error reporting
 
 **Advanced Features:**
-- BaseType linking to poe2db.tw database
+- BaseType linking to poedb.tw (POE1) and poe2db.tw (POE2) databases
 - Quick action lightbulb menus for colors and shapes
 - Smart autocompletion with context-aware suggestions
 - 60+ hover definitions from official documentation

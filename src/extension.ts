@@ -203,7 +203,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    // Register document link provider for BaseType links to poe2db.tw
+    // Register document link provider for BaseType links to poedb.tw (POE1) or poe2db.tw (POE2) - auto-detected from filter file
     const linkProvider = new FilterDocumentLinkProvider();
     context.subscriptions.push(
         vscode.languages.registerDocumentLinkProvider('poefilter', linkProvider)
@@ -640,7 +640,53 @@ class FilterDocumentLinkProvider implements vscode.DocumentLinkProvider {
         }
     }
 
-    private getBaseUrl(itemName: string): string {
+    /**
+     * Detects whether a filter file is for POE 1 or POE 2.
+     * 
+     * Detection priority:
+     * 1. Header comment: "NeverSink's Indepth Loot Filter - for Path of Exile 2" → POE2
+     *                    "NeverSink's Indepth Loot Filter - for Path of Exile"   → POE1
+     * 2. File path: checks for "POE 2" or "POE 1" in folder names
+     * 3. Falls back to null (unknown) if neither method matches
+     */
+    private detectFilterVersion(document: vscode.TextDocument): 'POE1' | 'POE2' | null {
+        // Check the first 10 lines for the NeverSink header
+        const linesToCheck = Math.min(document.lineCount, 10);
+        for (let i = 0; i < linesToCheck; i++) {
+            const lineText = document.lineAt(i).text;
+            // Check for POE 2 first (more specific match) to avoid false positive on "Path of Exile" substring
+            if (/Path of Exile\s*2/i.test(lineText)) {
+                return 'POE2';
+            }
+            if (/NeverSink.*Loot Filter.*Path of Exile/i.test(lineText) && !/Path of Exile\s*2/i.test(lineText)) {
+                return 'POE1';
+            }
+        }
+
+        // Fallback: check the file path for folder name clues
+        const filePath = document.uri.fsPath.toLowerCase();
+        if (filePath.includes('poe 2') || filePath.includes('poe2')) {
+            return 'POE2';
+        }
+        if (filePath.includes('poe 1') || filePath.includes('poe1')) {
+            return 'POE1';
+        }
+
+        return null; // Unknown — will fall back to setting-based logic
+    }
+
+    private getBaseUrl(document: vscode.TextDocument, itemName: string): string {
+        // First, try to auto-detect from the filter file itself
+        const detectedVersion = this.detectFilterVersion(document);
+
+        if (detectedVersion === 'POE1') {
+            return 'https://poedb.tw/us/';
+        }
+        if (detectedVersion === 'POE2') {
+            return 'https://poe2db.tw/us/';
+        }
+
+        // Fallback: use the global gameVersion setting + basetype lookup
         const config = vscode.workspace.getConfiguration('poefilter');
         const gameVersion = config.get<string>('gameVersion', 'Both');
 
@@ -685,7 +731,7 @@ class FilterDocumentLinkProvider implements vscode.DocumentLinkProvider {
                     const linkRange = new vscode.Range(startPos, endPos);
                     
                     // Get the appropriate base URL for this item
-                    const baseUrl = this.getBaseUrl(itemName);
+                    const baseUrl = this.getBaseUrl(document, itemName);
                     
                     // Convert item name to URL format (spaces to underscores)
                     const urlName = itemName.replace(/\s+/g, '_');
