@@ -266,4 +266,4 @@ MIT License - See LICENSE file for details
 
 ---
 
-**Enjoy editing your POE2 filters with ease!** 🎮✨
+**Enjoy editing your POE & POE2 filters with ease!** 🎮✨
